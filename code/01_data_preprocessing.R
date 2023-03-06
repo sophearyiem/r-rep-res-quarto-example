@@ -1,7 +1,7 @@
 # Uncomment if libraries need to be loaded
-#library(tidyverse)
-#library(stringi)
-#source("analysis_scripts/functions/GARP_funcs.R")
+library(tidyverse)
+library(stringi)
+source("code/functions/GARP_funcs.R")
 
 #Read Mastersheet
 df <- readxl::read_excel("data/GARP-TSST-mastersheet.xlsx")
@@ -22,7 +22,7 @@ for (file in raw_files) {
                        error = function(c) {"error"}
            )
   
-  if (raw_data == "error") {
+  if (identical(raw_data, "error")) {
     raw_data <- tryCatch(raw_data <- read.csv(path,
                                               stringsAsFactors=FALSE, 
                                               row.names = 1,
@@ -31,7 +31,7 @@ for (file in raw_files) {
     )
   }
   
-  if (raw_data == "error") {next}
+  if (identical(raw_data, "error")) {next}
   
   #Read out VPN and measurement
   vpn <- sample(raw_data$VP.Code, 1)
